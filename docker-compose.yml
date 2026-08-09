@@ -1,0 +1,19 @@
+services:
+
+  app-blue:
+    build: .
+    container_name: app-blue
+    environment:
+      APP_VERSION: v1
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+
+  app-green:
+    build: .
+    container_name: app-green
+    environment:
+      APP_VERSION: v1
+    ports:
+      - "3002:3000"
+    restart: unless-stopped
