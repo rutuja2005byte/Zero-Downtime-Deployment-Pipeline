@@ -1,0 +1,59 @@
+services:
+
+  app-1:
+    build: .
+    container_name: rolling-app-1
+    environment:
+      APP_VERSION: v1
+    ports:
+      - "4001:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  app-2:
+    build: .
+    container_name: rolling-app-2
+    environment:
+      APP_VERSION: v1
+    ports:
+      - "4002:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  app-3:
+    build: .
+    container_name: rolling-app-3
+    environment:
+      APP_VERSION: v1
+    ports:
+      - "4003:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  nginx-rolling:
+    image: nginx:alpine
+    container_name: nginx-rolling
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx-rolling.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app-1
+      - app-2
+      - app-3
+    restart: unless-stopped
