@@ -4,7 +4,7 @@ services:
     build: .
     container_name: rolling-app-1
     environment:
-      APP_VERSION: v1
+      APP_VERSION: ${APP_VERSION_1:-v1}
     ports:
       - "4001:3000"
     healthcheck:
@@ -19,7 +19,7 @@ services:
     build: .
     container_name: rolling-app-2
     environment:
-      APP_VERSION: v1
+      APP_VERSION: ${APP_VERSION_2:-v1}
     ports:
       - "4002:3000"
     healthcheck:
@@ -34,7 +34,7 @@ services:
     build: .
     container_name: rolling-app-3
     environment:
-      APP_VERSION: v1
+      APP_VERSION: ${APP_VERSION_3:-v1}
     ports:
       - "4003:3000"
     healthcheck:
